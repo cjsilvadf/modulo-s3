@@ -1,0 +1,15 @@
+{
+    "Id": "PolicyIDXXXX",
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "idxxxx",
+        "Action": [
+          "s3:GetObject"
+        ],
+        "Effect": "Allow",
+        "Resource": "COLOQUE O ARN DO BUCKET S3/*",
+        "Principal": "*"
+      }
+    ]
+  }

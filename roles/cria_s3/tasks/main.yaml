@@ -1,0 +1,39 @@
+- name: Cria bucket "{{ bucket_name }}.{{ domain }}" no S3
+  amazon.aws.s3_bucket:
+    aws_access_key: "{{ AWS_ACCESS_KEY_ID }}"
+    aws_secret_key: "{{ AWS_SECRET_ACCESS_KEY }}" 
+    name: "{{ bucket_name }}.{{ domain }}"
+    region: "{{ region }}"
+    public_access:
+      block_public_acls: no
+      block_public_policy: no
+      ignore_public_acls: no
+      restrict_public_buckets: no
+    policy: "{{ lookup('file','policy.json') }}"
+    state: present
+    tags:
+      Name: S3
+
+- name: Upload dos arquivos para o bucket "{{ bucket_name }}.{{ domain }}"
+  community.aws.s3_sync:
+    aws_access_key: "{{ AWS_ACCESS_KEY_ID }}"
+    aws_secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
+    bucket: "{{ bucket_name }}.{{ domain }}"
+    file_root: site/
+
+- name: Configurando website estático no s3 bucket {{ bucket_name }}.{{ domain }}
+  community.aws.s3_website:
+    aws_access_key: "{{ AWS_ACCESS_KEY_ID }}"
+    aws_secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
+    name: "{{ bucket_name }}.{{ domain }}"
+    suffix: index.html
+    error_key: error.html
+    state: present
+
+- name: Lista informações do bucket {{ bucket_name }}.{{ domain }}
+  community.aws.aws_s3_bucket_info:
+    aws_access_key: "{{ AWS_ACCESS_KEY_ID }}"
+    aws_secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
+    name: "{{ bucket_name }}.{{ domain }}"
+
+

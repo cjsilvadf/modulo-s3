@@ -1,0 +1,17 @@
+---
+- name: AWS Provision
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+
+  vars:
+    favcolor: blue
+  vars_files:
+    - ./groups_vars/tasks/all.yaml
+    - ./groups_vars/tasks/main.yaml
+
+  roles:
+    - cria_dominio
+    - cria_s3
+

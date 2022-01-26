@@ -1,0 +1,14 @@
+---
+
+# Variables
+region: us-east-1
+
+#ROUTE 53
+domain: example.com
+comment: alguma descrição
+
+#S3
+#name_S3_bucket: app1
+bucket_name: app
+s3_website_dash: s3-website
+AWS: amazon.com
